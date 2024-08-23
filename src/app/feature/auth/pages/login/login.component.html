@@ -1,0 +1,32 @@
+<section class="h-screen">
+  <div class="container h-full px-6 py-24">
+    <div class="flex h-full flex-wrap items-center justify-center lg:justify-between">
+      <!-- Left column container with background-->
+      <div class="mb-12 md:mb-0 md:w-8/12 lg:w-6/12">
+        <img src="https://tecdn.b-cdn.net/img/Photos/new-templates/bootstrap-login-form/draw2.svg" class="w-full" alt="Phone image" />
+      </div>
+
+      <!-- Right column container with form -->
+      <div class="md:w-8/12 lg:ms-6 lg:w-5/12">
+        <form>
+          <!-- Email input -->
+          <div class="relative mb-6">
+            <label for="emailInput" >Email address</label>
+            <input type="text" class="peer block min-h-[auto] w-full rounded border-0 bg-gray-100 px-3 py-[0.32rem] leading-[2.15] outline-none transition-all duration-200 ease-linear focus:bg-white focus:placeholder:opacity-100 peer-focus:text-black data-[twe-input-state-active]:placeholder:opacity-100 motion-reduce:transition-none" id="emailInput" placeholder="Email address" />
+          </div>
+
+          <!-- Password input -->
+          <div class="relative mb-6">
+            <label for="passwordInput" >Password</label>
+            <input type="password" class="peer block min-h-[auto] w-full rounded border-0 bg-gray-100 px-3 py-[0.32rem] leading-[2.15] outline-none transition-all duration-200 ease-linear focus:bg-white focus:placeholder:opacity-100 peer-focus:text-black data-[twe-input-state-active]:placeholder:opacity-100 motion-reduce:transition-none" id="passwordInput" placeholder="Password" />
+          </div>
+
+          <!-- Submit button -->
+          <button (click)="signIn()" type="button" class="w-full rounded bg-primary px-7 pb-2.5 pt-3 text-sm font-medium uppercase leading-normal text-white shadow-lg transition duration-150 ease-in-out hover:bg-primary-dark focus:bg-primary-dark focus:outline-none focus:ring-0 active:bg-primary-dark">
+            Sign in
+          </button>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
