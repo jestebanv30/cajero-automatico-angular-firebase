@@ -1,12 +1,37 @@
 import { Component } from '@angular/core';
+import {CurrencyPipe, NgClass, NgIf} from "@angular/common";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-receipt-cash',
   standalone: true,
-  imports: [],
+  imports: [
+    CurrencyPipe,
+    NgIf,
+    NgClass
+  ],
   templateUrl: './receipt-cash.component.html',
-  styleUrl: './receipt-cash.component.css'
+  styleUrls: ['./receipt-cash.component.css']
 })
 export class ReceiptCashComponent {
+
+  constructor(private router: Router) {
+  }
+  modalVisible: boolean = false;
+  amount: number = 0;
+  result: any = null;
+  withdrawalSuccess: boolean = false;
+
+  public openModal(amount: number, result: any): void {
+    this.amount = amount;
+    this.result = result;
+    this.withdrawalSuccess = result.exito;
+    this.modalVisible = true;
+  }
+
+  public async closeModal(): Promise<void> {
+    await this.router.navigateByUrl('/auth/login');
+    this.modalVisible = false;
+  }
 
 }

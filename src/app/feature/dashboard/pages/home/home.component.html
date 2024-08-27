@@ -45,7 +45,7 @@
 
   <!-- Botones de acción centrados en la parte inferior -->
   <div class="flex justify-center space-x-8">
-    <button (click)="calculateAndDisplayBills()" class="bg-green-600 text-white py-3 px-10 rounded-lg text-lg font-bold hover:bg-green-500 transition focus:outline-none focus:ring focus:ring-green-500">
+    <button (click)="calculateAndDisplayBills(selectedAmount)" class="bg-green-600 text-white py-3 px-10 rounded-lg text-lg font-bold hover:bg-green-500 transition focus:outline-none focus:ring focus:ring-green-500">
       Continuar
     </button>
     <button (click)="signOut()" class="bg-red-600 text-white py-3 px-10 rounded-lg text-lg font-bold hover:bg-red-500 transition focus:outline-none focus:ring focus:ring-red-500">
@@ -56,5 +56,9 @@
     </button>
   </div>
 </div>
+
+<app-receipt-cash></app-receipt-cash>
 </body>
 </html>
+
+
