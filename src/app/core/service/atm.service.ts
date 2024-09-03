@@ -11,20 +11,10 @@ export class AtmService {
   private readonly billetes = [100000, 50000, 20000, 10000];
   private readonly maxBilletes = [4, 3, 2, 1];
 
-  constructor() {
-    this.loadCashSelect();
-  }
+  constructor() {}
 
   public setCashSelect(amount: number): void {
     this.cashSelect.next(amount);
-    localStorage.setItem('cashSelect', JSON.stringify(amount));
-  }
-
-  public loadCashSelect(): void {
-    const savedAmount = localStorage.getItem('cashSelect');
-    if (savedAmount) {
-      this.cashSelect.next(JSON.parse(savedAmount));
-    }
   }
 
   public calculateBills(monto: number) {

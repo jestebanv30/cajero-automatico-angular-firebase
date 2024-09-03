@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import {authWithoutGuard} from "../core/guards/auth-without.guard";
 
 const routes: Routes = [
   {
@@ -8,6 +9,7 @@ const routes: Routes = [
   },
   {
     path: "dashboard",
+    canActivate: [authWithoutGuard],
     loadChildren: () => import('./dashboard/dashboard.module').then(d => d.DashboardModule),
   }
 ];

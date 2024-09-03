@@ -1,24 +1,44 @@
-<section class="h-screen">
-  <div class="container h-full px-6 py-24">
-    <div class="flex h-full flex-wrap items-center justify-center lg:justify-between">
-      <!-- Left column container with background -->
-      <div class="mb-12 md:mb-0 md:w-8/12 lg:w-6/12">
-        <img src="https://tecdn.b-cdn.net/img/Photos/new-templates/bootstrap-login-form/draw2.svg" class="w-full" alt="Phone image" />
+<section class="h-screen bg-gray-50 flex items-center justify-center">
+  <div class="container mx-auto px-6 py-24 max-w-4xl bg-white shadow-lg rounded-lg">
+    <div class="flex flex-col lg:flex-row items-center">
+      <!-- Left column container with image -->
+      <div class="mb-12 lg:mb-0 lg:w-6/12">
+        <img src="https://tecdn.b-cdn.net/img/Photos/new-templates/bootstrap-login-form/draw2.svg" class="w-full rounded-lg" alt="Phone image" />
       </div>
 
       <!-- Right column container with form -->
-      <div class="md:w-8/12 lg:ms-6 lg:w-5/12">
+      <div class="lg:w-6/12 lg:pl-12">
+        <h2 class="text-2xl font-bold mb-6">Iniciar Sesión</h2>
+        <p class="text-gray-600 mb-8">Por favor, completa el siguiente formulario para acceder a tu cuenta.</p>
         <form [formGroup]="loginForm" (ngSubmit)="signIn()">
-          <!-- Email input -->
+          <!-- Account Number input -->
           <div class="relative mb-6">
-            <label for="emailInput">Email address</label>
-            <input formControlName="email" type="text" class="peer block min-h-[auto] w-full rounded border-0 bg-gray-100 px-3 py-[0.32rem] leading-[2.15] outline-none transition-all duration-200 ease-linear focus:bg-white focus:placeholder:opacity-100 peer-focus:text-black data-[twe-input-state-active]:placeholder:opacity-100 motion-reduce:transition-none" id="emailInput" placeholder="Email address" />
+            <label for="accountNumberInput" class="block text-gray-700">Número de Cuenta</label>
+            <input formControlName="accountNumber" type="text" maxlength="10" id="accountNumberInput" class="peer block min-h-[auto] w-full rounded border-0 bg-gray-100 px-3 py-[0.32rem] leading-[2.15] outline-none transition-all duration-200 ease-linear focus:bg-white focus:placeholder:opacity-100 peer-focus:text-black" placeholder="Número de Cuenta" />
+            <div *ngIf="loginForm.get('accountNumber')?.invalid && loginForm.get('accountNumber')?.touched" class="text-red-500">
+              {{getErrorsForm('accountNumber')}}
+            </div>
+          </div>
+
+          <!-- Account Type input -->
+          <div class="relative mb-6">
+            <label for="accountTypeInput" class="block text-gray-700">Tipo de Cuenta</label>
+            <select formControlName="accountType" id="accountTypeInput" class="peer block min-h-[auto] w-full rounded border-0 bg-gray-100 px-3 py-[0.32rem] leading-[2.15] outline-none transition-all duration-200 ease-linear focus:bg-white focus:placeholder:opacity-100 peer-focus:text-black">
+              <option value="nequi">Nequi</option>
+              <option value="AA">Bancolombia Ahorro a la Mano</option>
+            </select>
+            <div *ngIf="loginForm.get('accountType')?.invalid && loginForm.get('accountType')?.touched" class="text-red-500">
+              {{ getErrorsForm('accountType') }}
+            </div>
           </div>
 
           <!-- Password input -->
           <div class="relative mb-6">
-            <label for="passwordInput">Password</label>
-            <input formControlName="password" type="password" class="peer block min-h-[auto] w-full rounded border-0 bg-gray-100 px-3 py-[0.32rem] leading-[2.15] outline-none transition-all duration-200 ease-linear focus:bg-white focus:placeholder:opacity-100 peer-focus:text-black data-[twe-input-state-active]:placeholder:opacity-100 motion-reduce:transition-none" id="passwordInput" placeholder="Password" />
+            <label for="passwordInput" class="block text-gray-700">Contraseña</label>
+            <input formControlName="password" type="password"  maxlength="4" id="passwordInput" class="peer block min-h-[auto] w-full rounded border-0 bg-gray-100 px-3 py-[0.32rem] leading-[2.15] outline-none transition-all duration-200 ease-linear focus:bg-white focus:placeholder:opacity-100 peer-focus:text-black" placeholder="Contraseña" />
+            <div *ngIf="loginForm.get('password')?.invalid && loginForm.get('password')?.touched" class="text-red-500">
+              {{getErrorsForm('password')}}
+            </div>
           </div>
 
           <!-- Error message -->
@@ -27,10 +47,15 @@
           </div>
 
           <!-- Submit button -->
-          <button type="submit" class="w-full rounded bg-primary px-7 pb-2.5 pt-3 text-sm font-medium uppercase leading-normal text-white shadow-lg transition duration-150 ease-in-out hover:bg-primary-dark focus:bg-primary-dark focus:outline-none focus:ring-0 active:bg-primary-dark">
-            Sign in
+          <button type="submit" [disabled]="isLocked" class="w-full rounded bg-blue-600 px-7 pb-2.5 pt-3 text-sm font-medium uppercase leading-normal text-white shadow-lg transition duration-150 ease-in-out hover:bg-blue-700 focus:bg-blue-700 focus:outline-none focus:ring-0 active:bg-blue-800">
+            Iniciar Sesión
           </button>
         </form>
+
+        <!-- Register link -->
+        <div class="mt-4 text-center">
+          <p class="text-gray-600">¿No tienes una cuenta? <a href="/auth/register" class="text-blue-600 hover:underline">Regístrate aquí</a></p>
+        </div>
       </div>
     </div>
   </div>

@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import {CurrencyPipe, NgClass, NgIf} from "@angular/common";
 import {Router} from "@angular/router";
+import {AuthService} from "../../../../core/service/auth.service";
 
 @Component({
   selector: 'app-receipt-cash',
@@ -15,7 +16,7 @@ import {Router} from "@angular/router";
 })
 export class ReceiptCashComponent {
 
-  constructor(private router: Router) {
+  constructor(private router: Router, private authService: AuthService) {
   }
   modalVisible: boolean = false;
   amount: number = 0;
@@ -30,7 +31,7 @@ export class ReceiptCashComponent {
   }
 
   public async closeModal(): Promise<void> {
-    await this.router.navigateByUrl('/auth/login');
+    await this.authService.signOut();
     this.modalVisible = false;
   }
 

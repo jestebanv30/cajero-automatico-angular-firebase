@@ -1,1 +1,89 @@
-<p>register works!</p>
+<section class="h-screen bg-gray-50 flex items-center justify-center">
+  <div class="container mx-auto px-6 py-24 max-w-4xl bg-white shadow-lg rounded-lg">
+    <div class="flex flex-col lg:flex-row items-center">
+      <!-- Left column container with image -->
+      <div class="mb-12 lg:mb-0 lg:w-6/12">
+        <img src="https://tecdn.b-cdn.net/img/Photos/new-templates/bootstrap-login-form/draw2.svg" class="w-full rounded-lg" alt="Phone image" />
+      </div>
+
+      <!-- Right column container with form -->
+      <div class="lg:w-6/12 lg:pl-12">
+        <h2 class="text-2xl font-bold mb-6">Registro de Cuenta</h2>
+        <p class="text-gray-600 mb-8">Por favor, completa el siguiente formulario para crear una nueva cuenta.</p>
+        <form [formGroup]="registerForm" (ngSubmit)="register()">
+          <!-- First Name input -->
+          <div class="relative mb-6">
+            <label for="firstNameInput" class="block text-gray-700">Primer Nombre</label>
+            <input formControlName="firstName" type="text" id="firstNameInput" maxlength="10" class="peer block min-h-[auto] w-full rounded border-0 bg-gray-100 px-3 py-[0.32rem] leading-[2.15] outline-none transition-all duration-200 ease-linear focus:bg-white focus:placeholder:opacity-100 peer-focus:text-black" placeholder="Primer Nombre" />
+            <div *ngIf="registerForm.get('firstName')?.invalid && registerForm.get('firstName')?.touched" class="text-red-500">
+              {{getErrorsForm('firstName')}}
+            </div>
+          </div>
+
+          <!-- Last Name input -->
+          <div class="relative mb-6">
+            <label for="lastNameInput" class="block text-gray-700">Primer Apellido</label>
+            <input formControlName="lastName" type="text" id="lastNameInput" maxlength="10" class="peer block min-h-[auto] w-full rounded border-0 bg-gray-100 px-3 py-[0.32rem] leading-[2.15] outline-none transition-all duration-200 ease-linear focus:bg-white focus:placeholder:opacity-100 peer-focus:text-black" placeholder="Primer Apellido" />
+            <div *ngIf="registerForm.get('lastName')?.invalid && registerForm.get('lastName')?.touched" class="text-red-500">
+              {{getErrorsForm('lastName')}}
+            </div>
+          </div>
+
+          <!-- Account Number input -->
+          <div class="relative mb-6">
+            <label for="accountNumberInput" class="block text-gray-700">Número de Cuenta</label>
+            <input formControlName="accountNumber" type="text" maxlength="10" id="accountNumberInput" class="peer block min-h-[auto] w-full rounded border-0 bg-gray-100 px-3 py-[0.32rem] leading-[2.15] outline-none transition-all duration-200 ease-linear focus:bg-white focus:placeholder:opacity-100 peer-focus:text-black" placeholder="Número de Cuenta" />
+            <div *ngIf="registerForm.get('accountNumber')?.invalid && registerForm.get('accountNumber')?.touched" class="text-red-500">
+            {{getErrorsForm('accountNumber')}}
+            </div>
+          </div>
+
+          <!-- Account Type input -->
+          <div class="relative mb-6">
+            <label for="accountTypeInput" class="block text-gray-700">Tipo de Cuenta</label>
+            <select formControlName="accountType" id="accountTypeInput" class="peer block min-h-[auto] w-full rounded border-0 bg-gray-100 px-3 py-[0.32rem] leading-[2.15] outline-none transition-all duration-200 ease-linear focus:bg-white focus:placeholder:opacity-100 peer-focus:text-black">
+              <option value="nequi">Nequi</option>
+              <option value="AA">Bancolombia Ahorro a la Mano</option>
+            </select>
+            <div *ngIf="registerForm.get('accountType')?.invalid && registerForm.get('accountType')?.touched" class="text-red-500">
+              {{ getErrorsForm('accountType') }}
+            </div>
+          </div>
+
+          <!-- Password input -->
+          <div class="relative mb-6">
+            <label for="passwordInput" class="block text-gray-700">Contraseña</label>
+            <input formControlName="password" type="password" maxlength="4" id="passwordInput" class="peer block min-h-[auto] w-full rounded border-0 bg-gray-100 px-3 py-[0.32rem] leading-[2.15] outline-none transition-all duration-200 ease-linear focus:bg-white focus:placeholder:opacity-100 peer-focus:text-black" placeholder="Contraseña" />
+            <div *ngIf="registerForm.get('password')?.invalid && registerForm.get('password')?.touched" class="text-red-500">
+              {{getErrorsForm('password')}}
+            </div>
+          </div>
+
+          <!-- Confirm Password input -->
+          <div class="relative mb-6">
+            <label for="confirmPasswordInput" class="block text-gray-700">Confirmar Contraseña</label>
+            <input formControlName="confirmPassword" type="password" maxlength="4" id="confirmPasswordInput" class="peer block min-h-[auto] w-full rounded border-0 bg-gray-100 px-3 py-[0.32rem] leading-[2.15] outline-none transition-all duration-200 ease-linear focus:bg-white focus:placeholder:opacity-100 peer-focus:text-black" placeholder="Confirmar Contraseña" />
+            <div *ngIf="registerForm.get('confirmPassword')?.invalid && registerForm.get('confirmPassword')?.touched" class="text-red-500">
+              {{getErrorsForm('confirmPassword')}}
+            </div>
+          </div>
+
+          <!-- Error message -->
+          <div *ngIf="errorMessage" class="text-red-500 mb-4">
+            {{ errorMessage }}
+          </div>
+
+          <!-- Submit button -->
+          <button type="submit" class="w-full rounded bg-blue-600 px-7 pb-2.5 pt-3 text-sm font-medium uppercase leading-normal text-white shadow-lg transition duration-150 ease-in-out hover:bg-blue-700 focus:bg-blue-700 focus:outline-none focus:ring-0 active:bg-blue-800">
+            Registrar
+          </button>
+
+          <!-- Login link -->
+          <div class="mt-4 text-center">
+            <p class="text-gray-600">¿Ya tienes una cuenta? <a href="/auth/login" class="text-blue-600 hover:underline">Inicia sesión</a></p>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>

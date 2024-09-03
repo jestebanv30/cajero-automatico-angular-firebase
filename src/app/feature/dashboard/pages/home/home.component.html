@@ -7,7 +7,21 @@
   <script src="https://cdn.tailwindcss.com"></script>
 </head>
 <body class="bg-gray-900 flex justify-center items-center min-h-screen">
-<div class="bg-gray-800 rounded-lg shadow-xl p-6 md:p-10 w-full max-w-lg">
+<div class="bg-gray-800 rounded-lg shadow-xl p-6 md:p-10 w-full max-w-lg relative">
+
+  <!-- Sección de saludo personalizado -->
+  <div class="text-white text-left mb-8">
+    <h2 class="text-lg md:text-xl font-semibold">Hola, <span class="text-yellow-500">{{ userName }}</span></h2>
+    <p class="text-sm md:text-base text-gray-400">Número de cuenta  {{userAccountType}}: <span class="text-blue-500">{{ userAccountNumber }}</span></p>
+  </div>
+
+  <!-- Nueva sección para la clave dinámica -->
+  <div class="absolute top-0 right-0 mt-4 mr-4 text-white text-sm md:text-base text-right">
+    <p class="font-semibold">Clave Dinámica:</p>
+    <p class="text-yellow-500 font-bold text-xl md:text-2xl">{{ dynamicCode }}</p>
+  </div>
+
+  <!-- Título del cajero automático -->
   <div class="text-white text-center mb-8">
     <h1 class="text-2xl md:text-3xl font-extrabold tracking-wider">Cajero Automático</h1>
     <p class="mt-3 text-gray-300">Seleccione un valor o ingrese otro monto</p>
@@ -37,10 +51,16 @@
     </button>
   </div>
 
-  <!-- Campo de entrada de otro valor abajo -->
+  <!-- Campo de entrada de otro valor -->
   <div class="mb-10">
     <label for="custom-amount" class="text-white text-lg block text-center mb-3">Otro valor:</label>
     <input #customAmountInput id="custom-amount" type="number" placeholder="$0" class="w-full px-4 py-3 bg-gray-700 text-white rounded-lg focus:outline-none focus:ring focus:ring-yellow-500" (input)="onInputChange($event)">
+  </div>
+
+  <!-- Nuevo campo de entrada para la clave dinámica -->
+  <div class="mb-10">
+    <label for="dynamic-code" class="text-white text-lg block text-center mb-3">Ingrese la Clave Dinámica:</label>
+    <input [(ngModel)]="enteredDynamicCode" id="dynamic-code" type="text" maxlength="8" placeholder="Clave dinámica" class="w-full px-4 py-3 bg-gray-700 text-white rounded-lg focus:outline-none focus:ring focus:ring-yellow-500">
   </div>
 
   <!-- Botones de acción centrados en la parte inferior -->
