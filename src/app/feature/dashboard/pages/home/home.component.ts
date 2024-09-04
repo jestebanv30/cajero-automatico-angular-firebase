@@ -27,7 +27,8 @@ export class HomeComponent implements OnInit, OnDestroy{
   public userName: string = '';
   public userAccountNumber: string = '';
   public userAccountType: string = '';
-  private sessionExpired!: Subscription;
+  private sessionExpiredInterval!: Subscription;
+  private sessionExpired = false;
 
   @ViewChild('customAmountInput') customAmountInput!: ElementRef<HTMLInputElement>;
   @ViewChild(ReceiptCashComponent) receiptModal!: ReceiptCashComponent;
@@ -54,17 +55,23 @@ export class HomeComponent implements OnInit, OnDestroy{
       this.selectedAmount = amount;
     });
 
-    this.sessionExpired = interval(56000).pipe(map(() =>  this.authService.signOut())).subscribe();
+    this.sessionExpiredInterval = interval(56000).subscribe(() => {
+      this.authService.signOut().then(() => {
+        if (!this.sessionExpired) {
+          this.sessionExpired = true;
+          Swal.fire({
+            icon: "error",
+            title: "Su sesión ha expirado",
+            text: "Vuelva a iniciar sesión.",
+          });
+        }
+      })
+    })
   }
 
   ngOnDestroy(): void {
-    Swal.fire({
-      icon: "error",
-      title: "Su sesión ha expirado",
-      text: "Vuelva a iniciar sesión.",
-    });
-    if (this.sessionExpired) {
-      this.sessionExpired.unsubscribe();
+    if (this.sessionExpiredInterval) {
+      this.sessionExpiredInterval.unsubscribe();
     }
   }
 

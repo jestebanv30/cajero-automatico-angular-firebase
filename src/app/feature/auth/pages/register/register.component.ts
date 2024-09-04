@@ -58,16 +58,15 @@ export class RegisterComponent {
 
     try {
       if (this.registerForm.valid){
+        await this.authService.register(user);
         Swal.fire({
           icon: "success",
           title: "Completado",
           text: "Registro Exitoso. Ya puedes iniciar sesión.",
         });
-        await this.authService.register(user);
       } else {
         this.errorMessage = 'Hay errores en el formulario.';
       }
-
     } catch (error) {
       console.error('Error al registrar cuenta:', error);
       Swal.fire({

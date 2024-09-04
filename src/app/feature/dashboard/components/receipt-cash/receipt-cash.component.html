@@ -1,23 +1,49 @@
 <div *ngIf="modalVisible" class="fixed inset-0 flex items-center justify-center z-50">
   <div class="absolute inset-0 bg-black opacity-70"></div>
-  <div class="bg-gray-900 text-white rounded-lg shadow-lg p-8 z-10 max-w-md w-full">
-    <h2 class="text-2xl font-bold mb-4">Resumen de Retiro</h2>
+  <div class="bg-gray-900 text-white rounded-xl shadow-2xl p-8 z-10 max-w-md w-full">
+    <!-- Encabezado del recibo -->
+    <div class="text-center mb-6">
+      <h2 class="text-3xl font-extrabold text-white">
+        <ng-container *ngIf="accountType === 'nequi'; else ahorro">
+          RETIRO NEQUI
+        </ng-container>
+        <ng-template #ahorro>
+          <ng-container *ngIf="accountType === 'AA'; else default">
+            RETIRO AHORRO A LA MANO
+          </ng-container>
+          <ng-template #default>
+            RETIRO {{ accountType }}
+          </ng-template>
+        </ng-template>
+      </h2>
+    </div>
+    <!-- Detalles del recibo -->
+    <div class="mb-4">
+      <p class="mb-2"><strong class="text-gray-300">Producto:</strong> {{ userAccountNumber }}</p>
+      <p class="mb-2"><strong class="text-gray-300">Titular:</strong> {{ userName }}</p>
+      <p class="mb-2"><strong class="text-gray-300">Fecha:</strong> {{ currentDate | date: 'MMM dd yyyy HH:mm:ss' }}</p>
+      <p class="mb-2"><strong class="text-gray-300">Valor:</strong> {{ amount | currency: 'USD':'symbol':'1.0-0' }}</p>
+    </div>
+    <!-- Billetes entregados -->
     <div *ngIf="withdrawalSuccess; else errorTemplate">
-      <p class="mb-4">Has solicitado retirar: <strong>{{ amount | currency:'USD' }}</strong></p>
-      <p class="mb-4">Billetes entregados:</p>
-      <ul class="list-disc pl-5 mb-6">
+      <p class="mb-4 font-semibold text-gray-400"><strong>Billetes entregados:</strong></p>
+      <ul class="list-none pl-0 mb-6 text-gray-500">
         <li *ngIf="result?.billetes['100k'] > 0">100k: {{ result?.billetes['100k'] }}</li>
         <li *ngIf="result?.billetes['50k'] > 0">50k: {{ result?.billetes['50k'] }}</li>
         <li *ngIf="result?.billetes['20k'] > 0">20k: {{ result?.billetes['20k'] }}</li>
         <li *ngIf="result?.billetes['10k'] > 0">10k: {{ result?.billetes['10k'] }}</li>
       </ul>
-      <p class="text-sm text-gray-400">Gracias por usar nuestro servicio.</p>
+      <p class="text-sm text-gray-500 text-center italic">Gracias por usar nuestro servicio.</p>
     </div>
+    <!-- Mensaje de error -->
     <ng-template #errorTemplate>
-      <p class="mb-6 text-red-500">No es posible retirar el monto solicitado.</p>
+      <p class="mb-6 text-red-500 text-center font-bold">No es posible retirar el monto solicitado.</p>
     </ng-template>
+    <!-- Botón de cierre -->
     <div class="flex justify-end">
-      <button (click)="closeModal()" class="bg-blue-600 text-white py-2 px-4 rounded hover:bg-blue-700 transition">Cerrar</button>
+      <button (click)="closeModal()" class="bg-gradient-to-r from-purple-500 to-purple-700 text-white py-2 px-4 rounded-full hover:from-purple-600 hover:to-purple-800 transition transform hover:scale-105 focus:outline-none focus:ring focus:ring-purple-500">
+        Cerrar
+      </button>
     </div>
   </div>
 </div>
