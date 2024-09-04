@@ -1,10 +1,12 @@
-import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
+import {Component, ElementRef, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {Router} from "@angular/router";
 import {CurrencyPipe, NgIf} from "@angular/common";
 import {AtmService} from "../../../../core/service/atm.service";
 import {ReceiptCashComponent} from "../../components/receipt-cash/receipt-cash.component";
 import {FormsModule} from "@angular/forms";
 import {AuthService} from "../../../../core/service/auth.service";
+import Swal from "sweetalert2";
+import {interval, map, Subscription} from "rxjs";
 
 @Component({
   selector: 'app-home',
@@ -18,13 +20,14 @@ import {AuthService} from "../../../../core/service/auth.service";
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.css']
 })
-export class HomeComponent implements OnInit{
+export class HomeComponent implements OnInit, OnDestroy{
   public selectedAmount: number = 0;
   public dynamicCode: string = '';
   public enteredDynamicCode: string = '';
   public userName: string = '';
   public userAccountNumber: string = '';
   public userAccountType: string = '';
+  private sessionExpired!: Subscription;
 
   @ViewChild('customAmountInput') customAmountInput!: ElementRef<HTMLInputElement>;
   @ViewChild(ReceiptCashComponent) receiptModal!: ReceiptCashComponent;
@@ -50,6 +53,19 @@ export class HomeComponent implements OnInit{
     this.atmService.getCashSelect$.subscribe(amount => {
       this.selectedAmount = amount;
     });
+
+    this.sessionExpired = interval(56000).pipe(map(() =>  this.authService.signOut())).subscribe();
+  }
+
+  ngOnDestroy(): void {
+    Swal.fire({
+      icon: "error",
+      title: "Su sesión ha expirado",
+      text: "Vuelva a iniciar sesión.",
+    });
+    if (this.sessionExpired) {
+      this.sessionExpired.unsubscribe();
+    }
   }
 
   public async signOut(): Promise<void> {
@@ -84,11 +100,19 @@ export class HomeComponent implements OnInit{
         this.receiptModal.openModal(selectAmount, result);
         this.atmService.setCashSelect(0);
       } else {
-        alert('Por favor, selecciona o ingrese un monto válido');
-        return;
+        Swal.fire({
+          icon: "error",
+          title: "Transacción cancelada",
+          text: "Monto inválido.",
+        });
+        await this.authService.signOut();
       }
     } else {
-      alert('Error en la clave dinámica.');
+      Swal.fire({
+        icon: "error",
+        title: "Transacción cancelada",
+        text: "Error en la clave dinámica.",
+      });
       await this.authService.signOut();
     }
   }

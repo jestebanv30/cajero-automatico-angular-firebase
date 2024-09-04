@@ -5,6 +5,7 @@ import {NgIf} from "@angular/common";
 import {AuthService} from "../../../../core/service/auth.service";
 import {FormConfig} from "../../../../core/validators/formConfig";
 import {ValidationService} from "../../../../core/validators/validationService";
+import Swal from "sweetalert2";
 
 @Component({
   selector: 'app-login',
@@ -60,7 +61,11 @@ export class LoginComponent {
   }
 
   private locksInputs(): void {
-    alert('Demasiados intentos fallidos. Intenta nuevamente en 2 minutos.');
+    Swal.fire({
+      icon: "error",
+      title: "Sistema Bloqueado",
+      text: "Demasiados intentos fallidos. Intenta nuevamente en 2 minutos.",
+    });
     this.loginForm.get('accountNumber')?.disable();
     this.loginForm.get('accountType')?.disable();
     this.loginForm.get('password')?.disable();

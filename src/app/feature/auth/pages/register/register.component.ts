@@ -6,6 +6,7 @@ import {AuthService} from "../../../../core/service/auth.service";
 import {User} from "../../../../core/models/user.interface";
 import {FormConfig} from "../../../../core/validators/formConfig";
 import {ValidationService} from "../../../../core/validators/validationService";
+import Swal from "sweetalert2";
 
 @Component({
   selector: 'app-register',
@@ -57,7 +58,11 @@ export class RegisterComponent {
 
     try {
       if (this.registerForm.valid){
-        alert('Registro exitoso, ya puedes iniciar sesión.')
+        Swal.fire({
+          icon: "success",
+          title: "Completado",
+          text: "Registro Exitoso. Ya puedes iniciar sesión.",
+        });
         await this.authService.register(user);
       } else {
         this.errorMessage = 'Hay errores en el formulario.';
@@ -65,7 +70,11 @@ export class RegisterComponent {
 
     } catch (error) {
       console.error('Error al registrar cuenta:', error);
-      this.errorMessage = 'Ocurrió un error al registrar la cuenta. Inténtalo de nuevo.';
+      Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: "Ocurrió un error en registrar la cuenta. Intenta nuevamente.",
+      });
     }
   }
 

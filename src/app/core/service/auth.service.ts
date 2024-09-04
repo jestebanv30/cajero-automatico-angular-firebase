@@ -16,7 +16,7 @@ export class AuthService {
   constructor(private firestore: Firestore, private router: Router) {}
 
   public generateNewDynamicCode(): string {
-    const newCode = Math.floor(10000000 + Math.random() * 90000000).toString();
+    const newCode = Math.floor(100000 + Math.random() * 900000).toString();
     console.log('Nueva clave dinámica generada: ', newCode);
     this.dynamicCodeSubject.next(newCode);
     return newCode;
@@ -24,6 +24,7 @@ export class AuthService {
 
   public startDynamicCodeGeneration(): void {
     if (this.isAuthenticated) {
+      this.stopDynamicCodeGeneration();
       this.generateNewDynamicCode();
       this.dynamicCodeInterval = interval(20000).pipe(map(() => this.generateNewDynamicCode())).subscribe();
     }
@@ -32,6 +33,7 @@ export class AuthService {
   public stopDynamicCodeGeneration(): void {
     if (this.dynamicCodeInterval) {
       this.dynamicCodeInterval.unsubscribe();
+      this.dynamicCodeInterval = null;
     }
   }
 
