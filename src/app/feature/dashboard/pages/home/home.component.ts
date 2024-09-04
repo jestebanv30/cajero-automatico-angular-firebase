@@ -70,6 +70,7 @@ export class HomeComponent implements OnInit, OnDestroy{
   }
 
   ngOnDestroy(): void {
+    this.atmService.setCashSelect(0);
     if (this.sessionExpiredInterval) {
       this.sessionExpiredInterval.unsubscribe();
     }
